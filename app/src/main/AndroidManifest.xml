@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application
+        android:label="炒糙米"
+        tools:targetApi="31">
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true"/>
+        <meta-data
+            android:name="xposeddescription"
+            android:value="给神金凡踩踩背，哪里不爽踩哪里"/>
+        <meta-data
+            android:name="xposedminversion"
+            android:value="53"/>
+        <meta-data
+            android:name="xposedscope"
+            android:value="com.android.providers.downloads.ui;com.xiaomi.macro;com.miui.securitycenter;com.miui.phrase;com.miui.home;com.miui.gallery;com.android.providers.media.module"/>
+    </application>
+</manifest>

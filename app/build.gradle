@@ -1,0 +1,33 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'XP.Fuck.MI'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "XP.Fuck.MI"
+        minSdk 28
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compileOnly files('lib\\api-82.jar')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
+    implementation 'org.luckypray:dexkit:2.0.4'
+}
