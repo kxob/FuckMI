@@ -92,28 +92,9 @@ public class Fucker implements IXposedHookLoadPackage {
                         }
                     });
                 }
-                //＠剪贴板与常用语：拒绝区别对待输入法
-                if (lpparam.packageName.equals("com.miui.phrase")) {
-                    Class<?> InputMethodBottomManager = findClass("com.miui.inputmethod.InputMethodBottomManager", classLoader);
-                    findAndHookMethod(InputMethodBottomManager, "getSupportIme", new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) {
-                            Object sBottomViewHelper = getStaticObjectField(InputMethodBottomManager, "sBottomViewHelper");
-                            Object mImm = getObjectField(sBottomViewHelper, "mImm");
-                            param.setResult(callMethod(mImm, "getEnabledInputMethodList"));
-
-                        }
-                    });
-                    /*findAndHookMethod(Iterator.class, "remove", new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) {
-                            for (StackTraceElement element : Thread.currentThread().getStackTrace()) if (element.getClassName().equals("com.miui.inputmethod.InputMethodBottomManager") && element.getMethodName().equals("getSupportIme")) param.setResult(null);
-                        }
-                    });*/
-                }
                 //＠系统桌面：谁教你一碰到图标就预启动应用的？
                 if (lpparam.packageName.equals("com.miui.home")) {
-                    findAndHookMethod("com.miui.home.launcher.util.PreLaunchAppUtil", classLoader, "preLaunchProcess", findClass("com.miui.home.launcher.ShortcutInfo", classLoader), new XC_MethodReplacement() {
+                    hookMethod(bridge.findMethod(FindMethod.create().matcher(MethodMatcher.create().name("preLaunchProcess").declaredClass(ClassMatcher.create().className("PreLaunchAppUtil", StringMatchType.EndsWith)))).single().getMethodInstance(classLoader), new XC_MethodReplacement() {
                         @Override
                         protected Object replaceHookedMethod(MethodHookParam param) {
                             return false;
