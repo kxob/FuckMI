@@ -12,9 +12,9 @@
             android:value="给神金凡踩踩背，哪里不爽踩哪里"/>
         <meta-data
             android:name="xposedminversion"
-            android:value="53"/>
+            android:value="93"/>
         <meta-data
             android:name="xposedscope"
-            android:value="com.android.providers.downloads.ui;com.xiaomi.macro;com.miui.securitycenter;com.miui.phrase;com.miui.home;com.miui.gallery;com.android.providers.media.module"/>
+            android:resource="@array/scope"/>
     </application>
 </manifest>

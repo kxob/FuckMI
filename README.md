@@ -11,11 +11,10 @@
 - [x] 屏蔽桌面图标一碰就预启动应用的逻辑
 - [x] 禁止相册创建缩略图`/sdcard/Android/data/com.miui.gallery/files/gallery_disk_cache`占用大量空间（不影响即时显示）
 - [x] 屏蔽`/sdcard/DCIM/.globalTrash`（感谢[GuhDoy/GlobalTrashKiller](https://github.com/GuhDoy/GlobalTrashKiller)）
-- [ ] 通知面板左滑不消除卡片，而是切换到控制中心 *（徒有想法但完全不会写）*
-
+- [x] 通知面板左滑不消除通知卡片，而是正常切换到控制中心
 ---
 
-作者本人系Xposed初学者，目前写出来的东西也是一拓大边，有些Hook可能不生效，但是因为太菜而找不到原因；目前模块没有界面也没有开关功能，因为我还不会整，如果想完善欢迎[Fork](https://github.com/kxob/FuckMI/fork)并提交PR！
+目前模块没有界面也没有开关功能，因为我只学了安卓逆向，没学过正向开发，如果想完善欢迎[Fork](https://github.com/kxob/FuckMI/fork)并提交PR！
 
 ---
 

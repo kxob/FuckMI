@@ -10,8 +10,8 @@ android {
         applicationId "XP.Fuck.MI"
         minSdk 28
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
     }
 
     buildTypes {
@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    compileOnly files('lib\\api-82.jar')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
-    implementation 'org.luckypray:dexkit:2.0.4'
+    compileOnly libs.xposed
+    implementation libs.kotlin
+    implementation libs.dexkit
 }

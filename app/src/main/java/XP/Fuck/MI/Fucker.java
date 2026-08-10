@@ -2,7 +2,7 @@ package XP.Fuck.MI;
 
 import android.app.Application;
 import android.content.Context;
-import android.view.View;
+import android.view.*;
 
 import org.luckypray.dexkit.DexKitBridge;
 import org.luckypray.dexkit.query.FindMethod;
@@ -19,6 +19,9 @@ import static de.robv.android.xposed.XposedBridge.*;
 import static de.robv.android.xposed.XposedHelpers.*;
 
 public class Fucker implements IXposedHookLoadPackage {
+    private MotionEvent lastEvent;
+    private float downX, downY, slop;
+    private boolean isRTL;
     static {
         System.loadLibrary("dexkit");
     }
@@ -48,13 +51,13 @@ public class Fucker implements IXposedHookLoadPackage {
                             Object macro = ((List<?>) getObjectField(param.thisObject, "mMacroList")).get(getIntField(param.thisObject, "mSelectedPosition"));
                             int playParameterFlag = getIntField(param.thisObject, "mPlayParameterFlag");
                             switch (playParameterFlag) {
-                                case 1: // 播放速度
+                                case 1: //播放速度
                                     callMethod(macro, "setPlaySpeed", Double.parseDouble(inputValue));
                                     break;
-                                case 2: // 播放次数
+                                case 2: //播放次数
                                     callMethod(macro, "setPlayTimes", Integer.parseInt(inputValue));
                                     break;
-                                case 3: // 播放延迟
+                                case 3: //播放延迟
                                     callMethod(macro, "setPlayDelay", Integer.parseInt(inputValue));
                                     break;
                             }
@@ -127,7 +130,27 @@ public class Fucker implements IXposedHookLoadPackage {
                 }
                 //＠系统界面：通知面板左滑不消除卡片，而是切换到控制中心
                 if (lpparam.packageName.equals("com.android.systemui")) {
-                    //有这个想法但不会写qAq
+                    findAndHookMethod("com.android.systemui.shade.NotificationShadeWindowView", classLoader, "onInterceptTouchEvent", MotionEvent.class, new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            MotionEvent motionEvent = (MotionEvent) param.args[0];
+                            if (motionEvent == null) return; lastEvent = motionEvent;
+                            if (motionEvent.getActionMasked() != MotionEvent.ACTION_DOWN) return;
+                            downX = motionEvent.getRawX(); downY = motionEvent.getRawY();
+                            Context context = ((View) param.thisObject).getContext();
+                            slop = (float) ViewConfiguration.get(context).getScaledTouchSlop();
+                            isRTL = context.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+                        }
+                    });
+                    findAndHookMethod("com.miui.systemui.shade.NotificationShadeWrapper", classLoader, "getAllowParentInterceptSwitchEvent", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            if (lastEvent == null || lastEvent.getActionMasked() != MotionEvent.ACTION_MOVE) return;
+                            float dx = lastEvent.getRawX() - downX; float dy = lastEvent.getRawY() - downY;
+                            if (Math.abs(dx) <= Math.abs(dy) || slop < 0) return;
+                            if (isRTL ? dx > slop : dx < -slop) param.setResult(true);
+                        }
+                    });
                 }
                 bridge.close();
             }

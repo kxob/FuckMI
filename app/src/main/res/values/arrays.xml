@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="scope">
+        <item>com.android.providers.downloads.ui</item>
+        <item>com.xiaomi.macro</item>
+        <item>com.miui.securitycenter</item>
+        <item>com.miui.phrase</item>
+        <item>com.miui.home</item>
+        <item>com.miui.gallery</item>
+        <item>com.android.providers.media.module</item>
+        <item>com.android.systemui</item>
+    </string-array>
+</resources>
